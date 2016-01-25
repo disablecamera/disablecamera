@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Permanently Disable Camera</string>
+
+    <string name="grant_permissions_button_text">Grant Permissions</string>
+    <string name="disable_camera_button_text">Disable Camera</string>
+
+    <string name="needs_permissions_text">
+        Thanks for installing. This app will guide you through a few steps to disable your camera.
+        First, press the button to give this app permissions to disable the camera.
+    </string>
+    <string name="disable_camera_text">
+        Now, press the button to disable the camera.
+    </string>
+    <string name="disabled_not_permanently_text">
+        The camera has been disabled, but not permanently. Follow the instructions at
+        <a href="http://disablecamera.com">disablecamera.com</a> to permanently disable the camera.
+        You\'ll need a computer.
+    </string>
+    <string name="permanently_disabled_text">
+        The camera has been permanently disabled. Visit
+        <a href="http://disablecamera.com">disablecamera.com</a> for more information.
+    </string>
 </resources>

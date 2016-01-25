@@ -1,21 +1,22 @@
 package com.disablecamera;
 
+import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DisableCameraActivity extends AppCompatActivity {
+public class DisableCameraActivity extends Activity {
     private static final int REQUEST_CODE_ENABLE_DEVICE_ADMIN = 1;
 
     private TextView stateTextView;
-    private Button requestPermissionsButton;
+    private Button grantPermissionsButton;
     private Button disableCameraButton;
 
     @Override
@@ -23,10 +24,13 @@ public class DisableCameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disable_camera);
         stateTextView = (TextView) findViewById(R.id.state_text_view);
-        requestPermissionsButton = (Button) findViewById(R.id.request_permissions_button);
+        grantPermissionsButton = (Button) findViewById(R.id.grant_permissions_button);
         disableCameraButton = (Button) findViewById(R.id.disable_camera_button);
 
-        requestPermissionsButton.setOnClickListener(new View.OnClickListener() {
+        // Make links tappable.
+        stateTextView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        grantPermissionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 requestPermissions();
@@ -78,35 +82,6 @@ public class DisableCameraActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void refreshState() {
-        switch (getCurrentState()) {
-            case NEEDS_PERMISSIONS:
-                stateTextView.setText(
-                        "Press the button to request permissions to disable the camera.");
-                requestPermissionsButton.setVisibility(View.VISIBLE);
-                disableCameraButton.setVisibility(View.GONE);
-                break;
-            case HAS_PERMISSIONS:
-                stateTextView.setText("Press the button to disable the camera.");
-                requestPermissionsButton.setVisibility(View.GONE);
-                disableCameraButton.setVisibility(View.VISIBLE);
-                break;
-            case CAMERA_DISABLED:
-                stateTextView.setText(
-                        "The camera has been disabled, but not permanently. " +
-                        "Follow the instructions at http://disablecamera.com to permanently " +
-                        "disable the camera.");
-                requestPermissionsButton.setVisibility(View.GONE);
-                disableCameraButton.setVisibility(View.GONE);
-                break;
-            case IS_DEVICE_OWNER:
-                stateTextView.setText("The camera has been permanently disabled.");
-                requestPermissionsButton.setVisibility(View.GONE);
-                disableCameraButton.setVisibility(View.GONE);
-                break;
-        }
-    }
-
     /**
      * These are the four stages of disabling the camera permanently, and each one corresponds to a
      * different UI "screen".
@@ -116,6 +91,31 @@ public class DisableCameraActivity extends AppCompatActivity {
         HAS_PERMISSIONS,
         CAMERA_DISABLED,
         IS_DEVICE_OWNER,
+    }
+
+    private void refreshState() {
+        switch (getCurrentState()) {
+            case NEEDS_PERMISSIONS:
+                stateTextView.setText(R.string.needs_permissions_text);
+                grantPermissionsButton.setVisibility(View.VISIBLE);
+                disableCameraButton.setVisibility(View.GONE);
+                break;
+            case HAS_PERMISSIONS:
+                stateTextView.setText(R.string.disable_camera_text);
+                grantPermissionsButton.setVisibility(View.GONE);
+                disableCameraButton.setVisibility(View.VISIBLE);
+                break;
+            case CAMERA_DISABLED:
+                stateTextView.setText(R.string.disabled_not_permanently_text);
+                grantPermissionsButton.setVisibility(View.GONE);
+                disableCameraButton.setVisibility(View.GONE);
+                break;
+            case IS_DEVICE_OWNER:
+                stateTextView.setText(R.string.permanently_disabled_text);
+                grantPermissionsButton.setVisibility(View.GONE);
+                disableCameraButton.setVisibility(View.GONE);
+                break;
+        }
     }
 
     private State getCurrentState() {

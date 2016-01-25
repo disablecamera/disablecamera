@@ -10,29 +10,38 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.disablecamera.DisableCameraActivity"
     android:orientation="vertical"
+    android:gravity="center_vertical"
     >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="30dp"
         android:text="Computing state..."
         android:id="@+id/state_text_view"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        tools:ignore="HardcodedText"
         />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Request Permissions"
-        android:id="@+id/request_permissions_button"
+        android:text="@string/grant_permissions_button_text"
+        android:id="@+id/grant_permissions_button"
+        android:textSize="22sp"
+        android:padding="20dp"
         />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Disable Camera"
+        android:text="@string/disable_camera_button_text"
         android:id="@+id/disable_camera_button"
+        android:textSize="22sp"
+        android:padding="20dp"
         />
 </LinearLayout>
