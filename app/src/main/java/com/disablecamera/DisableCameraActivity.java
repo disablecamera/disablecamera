@@ -16,6 +16,7 @@ public class DisableCameraActivity extends Activity {
     private static final int REQUEST_CODE_ENABLE_DEVICE_ADMIN = 1;
 
     private TextView stateTextView;
+    private TextView footerTextView;
     private Button grantPermissionsButton;
     private Button disableCameraButton;
 
@@ -24,11 +25,13 @@ public class DisableCameraActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disable_camera);
         stateTextView = (TextView) findViewById(R.id.state_text_view);
+        footerTextView = (TextView) findViewById(R.id.footer_text_view);
         grantPermissionsButton = (Button) findViewById(R.id.grant_permissions_button);
         disableCameraButton = (Button) findViewById(R.id.disable_camera_button);
 
         // Make links tappable.
         stateTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        footerTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
         grantPermissionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,21 +100,25 @@ public class DisableCameraActivity extends Activity {
         switch (getCurrentState()) {
             case NEEDS_PERMISSIONS:
                 stateTextView.setText(R.string.needs_permissions_text);
+                footerTextView.setVisibility(View.VISIBLE);
                 grantPermissionsButton.setVisibility(View.VISIBLE);
                 disableCameraButton.setVisibility(View.GONE);
                 break;
             case HAS_PERMISSIONS:
                 stateTextView.setText(R.string.disable_camera_text);
+                footerTextView.setVisibility(View.VISIBLE);
                 grantPermissionsButton.setVisibility(View.GONE);
                 disableCameraButton.setVisibility(View.VISIBLE);
                 break;
             case CAMERA_DISABLED:
                 stateTextView.setText(R.string.disabled_not_permanently_text);
+                footerTextView.setVisibility(View.GONE);
                 grantPermissionsButton.setVisibility(View.GONE);
                 disableCameraButton.setVisibility(View.GONE);
                 break;
             case IS_DEVICE_OWNER:
                 stateTextView.setText(R.string.permanently_disabled_text);
+                footerTextView.setVisibility(View.GONE);
                 grantPermissionsButton.setVisibility(View.GONE);
                 disableCameraButton.setVisibility(View.GONE);
                 break;

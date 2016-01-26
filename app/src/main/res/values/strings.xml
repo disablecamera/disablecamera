@@ -3,6 +3,9 @@
 
     <string name="grant_permissions_button_text">Grant Permissions</string>
     <string name="disable_camera_button_text">Disable Camera</string>
+    <string name="footer_text">
+        See <a href="http://disablecamera.com">disablecamera.com</a> for full instructions.
+    </string>
 
     <string name="needs_permissions_text">
         Thanks for installing. This app will guide you through a few steps to disable your camera.
