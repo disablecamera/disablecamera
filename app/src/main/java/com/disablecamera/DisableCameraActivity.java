@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
@@ -138,6 +139,10 @@ public class DisableCameraActivity extends Activity {
         if (!policyManager.isDeviceOwnerApp(BuildConfig.APPLICATION_ID)) {
             return State.CAMERA_DISABLED;
         }
+        // Apparently we can't query for user restrictions, so just always set them if they're not
+        // already set. We know that we're allowed to because we're the device owner.
+        policyManager.addUserRestriction(componentName, UserManager.DISALLOW_ADD_USER);
+        policyManager.addUserRestriction(componentName, UserManager.DISALLOW_FACTORY_RESET);
         return State.IS_DEVICE_OWNER;
     }
 }
